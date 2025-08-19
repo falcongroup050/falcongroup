@@ -194,7 +194,7 @@ export default function AchievementsPage() {
                     {/* Large image for desktop */}
                     <div className='hidden md:block'>
                       <img
-                        src={`https://tlwzwslcxnkozkaijweg.supabase.co/storage/v1/object/public/acheivments/${achievement.year}.jpeg`}
+                        src={`https://ynvtsbhncfrqhmaefnyj.supabase.co/storage/v1/object/public/acheivments/${achievement.year}.jpeg`}
                         alt='Achievement milestone'
                         className='w-[300px] h-[250px] object-cover rounded-lg shadow-xl border-4 border-naples-yellow/20'
                       />

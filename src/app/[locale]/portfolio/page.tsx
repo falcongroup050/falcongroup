@@ -83,7 +83,7 @@ const Portfolio: React.FC = () => {
               />
             ) : (
               <video
-                src={`https://tlwzwslcxnkozkaijweg.supabase.co/storage/v1/object/public/portfolio${item.src}`}
+                src={`https://ynvtsbhncfrqhmaefnyj.supabase.co/storage/v1/object/public/portfolio${item.src}`}
                 controls
                 className='w-full max-h-56 object-cover rounded-lg'
               />
