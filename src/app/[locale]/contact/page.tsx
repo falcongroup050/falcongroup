@@ -33,6 +33,7 @@ import Link from 'next/link'
 import { useTranslations } from 'next-intl'
 import type React from 'react'
 import { useState } from 'react'
+import SocialMediaIcons from '@/components/SocialMediaIcons'
 
 // Enhanced animation variants
 const heroVariants = {
@@ -525,51 +526,7 @@ export default function ContactPage() {
                         </div>
                       </motion.div>
                     ))}
-                  </CardContent>
-                </Card>
-              </motion.div>
-
-              {/* Map Placeholder */}
-              <motion.div {...scaleOnHover}>
-                <Card className='shadow-2xl border-0 bg-gradient-to-br from-background to-muted/30'>
-                  <CardContent className='p-0'>
-                    <motion.div
-                      className='h-64 bg-gradient-to-br from-muted/50 to-muted/30 rounded-lg flex items-center justify-center relative overflow-hidden'
-                      whileHover={{ scale: 1.02 }}
-                    >
-                      {/* Animated background pattern */}
-                      <motion.div
-                        className='absolute inset-0 opacity-10'
-                        animate={{
-                          backgroundPosition: ['0% 0%', '100% 100%'],
-                        }}
-                        transition={{
-                          duration: 20,
-                          repeat: Infinity,
-                          ease: 'linear',
-                        }}
-                        style={{
-                          backgroundImage:
-                            'radial-gradient(circle, currentColor 1px, transparent 1px)',
-                          backgroundSize: '30px 30px',
-                        }}
-                      />
-
-                      <div className='text-center relative z-10'>
-                        <motion.div {...mapPulseAnimation}>
-                          <MapPin className='h-16 w-16 text-naples-yellow mx-auto mb-4' />
-                        </motion.div>
-
-                        <motion.p
-                          className='text-muted-foreground text-lg font-medium'
-                          initial={{ opacity: 0, y: 20 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ delay: 0.5 }}
-                        >
-                          Interactive Map Coming Soon
-                        </motion.p>
-                      </div>
-                    </motion.div>
+                    <SocialMediaIcons />
                   </CardContent>
                 </Card>
               </motion.div>

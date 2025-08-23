@@ -32,32 +32,28 @@ export function TeamSection({ t }: TeamSectionProps) {
       title: t('team.companyDirector.title'),
       description: t('team.companyDirector.description'),
       contact: t.raw('team.companyDirector.contact'),
-      image:
-        'https://ynvtsbhncfrqhmaefnyj.supabase.co/storage/v1/object/public/team/companyDirector.jpeg',
+      image: `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/team/companyDirector.jpeg`,
     },
     {
       name: t('team.deputyDirector.name'),
       title: t('team.deputyDirector.title'),
       description: t('team.deputyDirector.description'),
       contact: t.raw('team.deputyDirector.contact'),
-      image:
-        'https://ynvtsbhncfrqhmaefnyj.supabase.co/storage/v1/object/public/team/deputyDirector.jpeg',
+      image: `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/team/deputyDirector.jpeg`,
     },
     {
       name: t('team.financialDirector.name'),
       title: t('team.financialDirector.title'),
       description: t('team.financialDirector.description'),
       contact: t.raw('team.financialDirector.contact'),
-      image:
-        'https://ynvtsbhncfrqhmaefnyj.supabase.co/storage/v1/object/public/team/financialDirector.jpeg',
+      image: `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/team/financialDirector.jpeg`,
     },
     {
       name: t('team.operationsManager.name'),
       title: t('team.operationsManager.title'),
       description: t('team.operationsManager.description'),
       contact: t.raw('team.operationsManager.contact'),
-      image:
-        'https://ynvtsbhncfrqhmaefnyj.supabase.co/storage/v1/object/public/team/operationsManager.jpeg',
+      image: `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/team/operationsManager.jpeg`,
     },
   ]
 

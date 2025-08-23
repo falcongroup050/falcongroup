@@ -7,6 +7,7 @@ import { Mail, MapPin, Phone } from 'lucide-react'
 import { useLocale, useTranslations } from 'next-intl'
 import Image from 'next/image'
 import Link from 'next/link'
+import SocialMediaIcons from './SocialMediaIcons'
 
 export function Footer() {
   const t = useTranslations()
@@ -187,6 +188,8 @@ export function Footer() {
                 </motion.div>
               ))}
             </div>
+
+            <SocialMediaIcons />
           </motion.div>
         </AnimatedSection>
 

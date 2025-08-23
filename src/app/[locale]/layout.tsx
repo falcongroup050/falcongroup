@@ -8,15 +8,17 @@ import { Cairo, Inter } from 'next/font/google'
 import { notFound } from 'next/navigation'
 import type React from 'react'
 import '../globals.css'
+import { Metadata } from 'next'
 
 const inter = Inter({ subsets: ['latin'] })
 const cairo = Cairo({ subsets: ['arabic', 'latin'] })
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Falcon Logistics',
   description: 'International logistics solutions with multilingual support.',
   icons: {
     icon: '/favicon_io/favicon.ico',
+    apple: '/favicon_io/apple-touch-icon.png',
   },
 }
 
