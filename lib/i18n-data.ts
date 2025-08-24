@@ -1,39 +1,13 @@
-import { createClient } from "@supabase/supabase-js"
-
-const supabase = createClient(process.env.SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!)
+import { fetchAllDataFromSheets } from "./google-sheets"
 
 export async function getArData() {
-  const data = await fetchAllData()
+  const data = await fetchAllDataFromSheets()
   return buildLanguageData("ar", data)
 }
 
 export async function getEnData() {
-  const data = await fetchAllData()
+  const data = await fetchAllDataFromSheets()
   return buildLanguageData("en", data)
-}
-
-async function fetchAllData() {
-  const [
-    { data: navigation },
-    { data: pageContent },
-    { data: services },
-    { data: teamMembers },
-    { data: achievementsTimeline },
-  ] = await Promise.all([
-    supabase.from("navigation").select("*"),
-    supabase.from("page_content").select("*"),
-    supabase.from("services").select("*"),
-    supabase.from("team_members").select("*"),
-    supabase.from("achievements_timeline").select("*").order("year", { ascending: true }),
-  ])
-
-  return {
-    navigation,
-    pageContent,
-    services,
-    teamMembers,
-    achievementsTimeline,
-  }
 }
 
 function buildLanguageData(lang: string, data: any) {
@@ -88,7 +62,7 @@ function buildLanguageData(lang: string, data: any) {
     )
   }
 
-  // Build the complete structure
+  // Build the complete structure - same as original
   return {
     navigation: {
       home: getNav("home"),
@@ -240,19 +214,19 @@ function buildLanguageData(lang: string, data: any) {
       },
     },
     footer: {
-      description: getContent('footer', 'main', 'description'),
-      links: getContent('footer', 'main', 'links'),
-      services: getContent('footer', 'main', 'services'),
-      contact: getContent('footer', 'main', 'contact'),
-      rights: getContent('footer', 'main', 'rights'),
-      location: getContent('footer', 'main', 'location'),
-      subtext: getContent('footer', 'main', 'subtext'),
-      phone: getContent('footer', 'main', 'phone'),
-      email: getContent('footer', 'main', 'email'),
+      description: getContent("footer", "main", "description"),
+      links: getContent("footer", "main", "links"),
+      services: getContent("footer", "main", "services"),
+      contact: getContent("footer", "main", "contact"),
+      rights: getContent("footer", "main", "rights"),
+      location: getContent("footer", "main", "location"),
+      subtext: getContent("footer", "main", "subtext"),
+      phone: getContent("footer", "main", "phone"),
+      email: getContent("footer", "main", "email"),
     },
     portfolio: {
       title: getContent("portfolio", "main", "title"),
       subtitle: getContent("portfolio", "main", "description"),
-    }
+    },
   }
 }

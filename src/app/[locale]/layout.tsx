@@ -29,8 +29,8 @@ export default async function LocaleLayout({
   children: React.ReactNode
   params: Promise<{ locale: string }>
 }) {
-  const messages = await getMessages()
   const { locale } = await params
+  const messages = await getMessages({ locale })
 
   if (!hasLocale(routing.locales, locale)) {
     notFound()
@@ -39,7 +39,7 @@ export default async function LocaleLayout({
   return (
     <html lang={locale} dir={locale === 'ar' ? 'rtl' : 'ltr'}>
       <body className={locale === 'en' ? inter.className : cairo.className}>
-        <NextIntlClientProvider messages={messages}>
+        <NextIntlClientProvider locale={locale} messages={messages}>
           <ThemeProvider
             attribute='class'
             defaultTheme='light'
