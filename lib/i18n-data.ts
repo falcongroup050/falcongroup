@@ -48,6 +48,7 @@ function buildLanguageData(lang: string, data: any) {
       title: isArabic ? member.title_ar : member.title_en,
       description: isArabic ? member.description_ar : member.description_en,
       contact: member.contact_info || [],
+      img_link: member.img_link || "",
     }
   }
 
@@ -58,6 +59,7 @@ function buildLanguageData(lang: string, data: any) {
         ?.map((achievement: any) => ({
           year: achievement.year.toString(),
           activities: achievement.activities,
+          image_url: achievement.image_url || "",
         })) || []
     )
   }

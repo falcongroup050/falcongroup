@@ -30,6 +30,7 @@ export default function AchievementsPage() {
   const achievementsData = t.raw('timeline.data') as Array<{
     year: string
     activities: string[]
+    image_url: string
   }>
 
   const yearVariants = {
@@ -194,7 +195,7 @@ export default function AchievementsPage() {
                     {/* Large image for desktop */}
                     <div className='hidden md:block'>
                       <img
-                        src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/acheivments/${achievement.year}.jpeg`}
+                        src={`${achievement.image_url}`}
                         alt='Achievement milestone'
                         className='w-[300px] h-[250px] object-cover rounded-lg shadow-xl border-4 border-naples-yellow/20'
                       />

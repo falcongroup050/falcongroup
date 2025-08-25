@@ -32,28 +32,28 @@ export function TeamSection({ t }: TeamSectionProps) {
       title: t('team.companyDirector.title'),
       description: t('team.companyDirector.description'),
       contact: t.raw('team.companyDirector.contact'),
-      image: `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/team/companyDirector.jpeg`,
+      image: t.raw('team.companyDirector.img_link'),
     },
     {
       name: t('team.deputyDirector.name'),
       title: t('team.deputyDirector.title'),
       description: t('team.deputyDirector.description'),
       contact: t.raw('team.deputyDirector.contact'),
-      image: `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/team/deputyDirector.jpeg`,
+      image: t.raw('team.deputyDirector.img_link'),
     },
     {
       name: t('team.financialDirector.name'),
       title: t('team.financialDirector.title'),
       description: t('team.financialDirector.description'),
       contact: t.raw('team.financialDirector.contact'),
-      image: `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/team/financialDirector.jpeg`,
+      image: t.raw('team.financialDirector.img_link'),
     },
     {
       name: t('team.operationsManager.name'),
       title: t('team.operationsManager.title'),
       description: t('team.operationsManager.description'),
       contact: t.raw('team.operationsManager.contact'),
-      image: `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/team/operationsManager.jpeg`,
+      image: t.raw('team.operationsManager.img_link'),
     },
   ]
 

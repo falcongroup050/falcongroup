@@ -83,6 +83,7 @@ export async function fetchAllDataFromSheets() {
     description_ar: row.get("description_ar"),
     description_en: row.get("description_en"),
     contact_info: row.get("contact_info") ? JSON.parse(row.get("contact_info")) : {},
+    img_link: row.get("image_url"),
     created_at: row.get("created_at"),
     updated_at: row.get("updated_at"),
   }))
@@ -91,6 +92,7 @@ export async function fetchAllDataFromSheets() {
     year: row.get("year"),
     language: row.get("language"),
     activities: row.get("activities") ? JSON.parse(row.get("activities")) : [],
+    image_url: row.get("image_url"),
   }))
 
   return {
