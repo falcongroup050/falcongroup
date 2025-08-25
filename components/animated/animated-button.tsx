@@ -4,18 +4,10 @@ import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { scaleOnHover } from '@/lib/motion'
 
-interface AnimatedButtonProps {
+import type { ButtonProps } from '@/components/ui/button'
+
+interface AnimatedButtonProps extends ButtonProps {
   children: React.ReactNode
-  className?: string
-  asChild?: boolean
-  size?: 'default' | 'sm' | 'lg' | 'icon'
-  variant?:
-    | 'default'
-    | 'destructive'
-    | 'outline'
-    | 'secondary'
-    | 'ghost'
-    | 'link'
 }
 
 export function AnimatedButton({

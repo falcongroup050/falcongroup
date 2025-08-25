@@ -344,6 +344,16 @@ export default function ContactPage() {
                           >
                             {t('contact.form.success')}
                           </motion.p>
+
+                          <AnimatedButton
+                            className='mt-6 w-full bg-naples-yellow text-eerie-black hover:bg-naples-yellow/90'
+                            onClick={() => {
+                              setSubmitted(false)
+                              setError(null)
+                            }}
+                          >
+                            {t('contact.form.reset')}
+                          </AnimatedButton>
                         </motion.div>
                       ) : (
                         <motion.form

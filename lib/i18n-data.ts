@@ -193,6 +193,7 @@ function buildLanguageData(lang: string, data: any) {
         service: getContent("contact", "form", "service"),
         message: getContent("contact", "form", "message"),
         submit: getContent("contact", "form", "submit"),
+        reset: getContent("contact", "form", "reset"),
         success: getContent("contact", "form", "success"),
         error: getContent("contact", "form", "error"),
       },
