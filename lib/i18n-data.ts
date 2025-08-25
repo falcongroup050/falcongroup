@@ -35,6 +35,7 @@ function buildLanguageData(lang: string, data: any) {
       title: isArabic ? service.title_ar : service.title_en,
       description: isArabic ? service.description_ar : service.description_en,
       features: isArabic ? service.features_ar : service.features_en,
+      image_url: service.image_url || "",
     }
   }
 

@@ -69,6 +69,7 @@ export async function fetchAllDataFromSheets() {
     description_en: row.get("description_en"),
     features_ar: row.get("features_ar") ? JSON.parse(row.get("features_ar")) : [],
     features_en: row.get("features_en") ? JSON.parse(row.get("features_en")) : [],
+    image_url: row.get("image_url"),
     created_at: row.get("created_at"),
     updated_at: row.get("updated_at"),
   }))
