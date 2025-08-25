@@ -98,7 +98,7 @@ const mapPulseAnimation = {
   },
   transition: {
     duration: 2,
-    repeat: Infinity,
+    repeat: Number.POSITIVE_INFINITY,
     ease: 'easeInOut',
   },
 }
@@ -107,14 +107,43 @@ export default function ContactPage() {
   const t = useTranslations('')
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitted, setSubmitted] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
-    // Simulate form submission
-    await new Promise((resolve) => setTimeout(resolve, 1000))
-    setIsSubmitting(false)
-    setSubmitted(true)
+    setError(null)
+
+    const formData = new FormData(e.target as HTMLFormElement)
+    const data = {
+      name: formData.get('name') as string,
+      email: formData.get('email') as string,
+      phone: formData.get('phone') as string,
+      company: formData.get('company') as string,
+      service: formData.get('service') as string,
+      message: formData.get('message') as string,
+    }
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to send message')
+      }
+
+      setSubmitted(true)
+    } catch (err) {
+      setError('Failed to send message. Please try again.')
+      console.error('Form submission error:', err)
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const contactInfo = [
@@ -162,7 +191,7 @@ export default function ContactPage() {
           }}
           transition={{
             duration: 8,
-            repeat: Infinity,
+            repeat: Number.POSITIVE_INFINITY,
             ease: 'easeInOut',
           }}
         />
@@ -176,7 +205,7 @@ export default function ContactPage() {
           }}
           transition={{
             duration: 10,
-            repeat: Infinity,
+            repeat: Number.POSITIVE_INFINITY,
             ease: 'easeInOut',
           }}
         />
@@ -197,7 +226,7 @@ export default function ContactPage() {
             }}
             transition={{
               duration: 5 + index,
-              repeat: Infinity,
+              repeat: Number.POSITIVE_INFINITY,
               ease: 'easeInOut',
               delay: index * 0.5,
             }}
@@ -237,7 +266,7 @@ export default function ContactPage() {
               }}
               transition={{
                 duration: 3,
-                repeat: Infinity,
+                repeat: Number.POSITIVE_INFINITY,
                 ease: 'easeInOut',
               }}
             />
@@ -325,6 +354,16 @@ export default function ContactPage() {
                           initial='initial'
                           animate='animate'
                         >
+                          {error && (
+                            <motion.div
+                              initial={{ opacity: 0, y: -10 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              className='p-4 bg-red-50 border border-red-200 rounded-lg text-red-700'
+                            >
+                              {error}
+                            </motion.div>
+                          )}
+
                           <motion.div
                             className='grid grid-cols-1 md:grid-cols-2 gap-4'
                             variants={formFieldVariants}
@@ -338,6 +377,7 @@ export default function ContactPage() {
                               </Label>
                               <Input
                                 id='name'
+                                name='name'
                                 required
                                 className='transition-all duration-300 focus:ring-2 focus:ring-naples-yellow/50'
                               />
@@ -352,6 +392,7 @@ export default function ContactPage() {
                               </Label>
                               <Input
                                 id='email'
+                                name='email'
                                 type='email'
                                 required
                                 className='transition-all duration-300 focus:ring-2 focus:ring-naples-yellow/50'
@@ -372,6 +413,7 @@ export default function ContactPage() {
                               </Label>
                               <Input
                                 id='phone'
+                                name='phone'
                                 type='tel'
                                 className='transition-all duration-300 focus:ring-2 focus:ring-naples-yellow/50'
                               />
@@ -386,6 +428,7 @@ export default function ContactPage() {
                               </Label>
                               <Input
                                 id='company'
+                                name='company'
                                 className='transition-all duration-300 focus:ring-2 focus:ring-naples-yellow/50'
                               />
                             </motion.div>
@@ -398,7 +441,7 @@ export default function ContactPage() {
                             <Label htmlFor='service'>
                               {t('contact.form.service')}
                             </Label>
-                            <Select>
+                            <Select name='service'>
                               <SelectTrigger className='transition-all duration-300 focus:ring-2 focus:ring-naples-yellow/50'>
                                 <SelectValue placeholder='Select a service' />
                               </SelectTrigger>
@@ -429,6 +472,7 @@ export default function ContactPage() {
                             </Label>
                             <Textarea
                               id='message'
+                              name='message'
                               rows={4}
                               required
                               className='transition-all duration-300 focus:ring-2 focus:ring-naples-yellow/50 resize-none'
@@ -443,7 +487,9 @@ export default function ContactPage() {
                                 }
                                 transition={{
                                   duration: 1,
-                                  repeat: isSubmitting ? Infinity : 0,
+                                  repeat: isSubmitting
+                                    ? Number.POSITIVE_INFINITY
+                                    : 0,
                                 }}
                               >
                                 {isSubmitting
@@ -456,7 +502,9 @@ export default function ContactPage() {
                                 animate={isSubmitting ? { rotate: 360 } : {}}
                                 transition={{
                                   duration: 1,
-                                  repeat: isSubmitting ? Infinity : 0,
+                                  repeat: isSubmitting
+                                    ? Number.POSITIVE_INFINITY
+                                    : 0,
                                   ease: 'linear',
                                 }}
                               >
