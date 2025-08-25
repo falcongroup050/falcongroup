@@ -105,35 +105,6 @@ export default function AboutPage() {
     <div className='flex flex-col'>
       {/* Hero Section */}
       <section className='relative py-20 bg-gradient-to-br from-eerie-black to-slate-gray text-white overflow-hidden'>
-        {/* Animated background elements */}
-        <motion.div
-          className='absolute top-20 left-10 w-72 h-72 bg-naples-yellow/10 rounded-full blur-3xl'
-          animate={{
-            scale: [1, 1.3, 1],
-            opacity: [0.3, 0.6, 0.3],
-            x: [0, 50, 0],
-          }}
-          transition={{
-            duration: 15,
-            repeat: Infinity,
-            ease: 'easeInOut',
-          }}
-        />
-
-        <motion.div
-          className='absolute bottom-20 right-10 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl'
-          animate={{
-            scale: [1.2, 1, 1.2],
-            opacity: [0.2, 0.5, 0.2],
-            x: [0, -30, 0],
-          }}
-          transition={{
-            duration: 10,
-            repeat: Infinity,
-            ease: 'easeInOut',
-          }}
-        />
-
         <div className='container relative z-10'>
           <motion.div
             className='max-w-3xl mx-auto text-center space-y-6'
@@ -154,13 +125,6 @@ export default function AboutPage() {
             >
               {t('subtitle')}
             </motion.p>
-
-            {/* Floating decorative element */}
-            <motion.div
-              className='mx-auto w-20 h-1 bg-gradient-to-r from-transparent via-naples-yellow to-transparent rounded-full'
-              variants={fadeInUp}
-              {...floatingAnimation}
-            />
           </motion.div>
         </div>
       </section>
@@ -247,20 +211,6 @@ export default function AboutPage() {
                     {t('excellence')}
                   </motion.div>
                 </div>
-
-                {/* Decorative floating elements */}
-                <motion.div
-                  className='absolute -bottom-6 -right-6 w-24 h-24 bg-naples-yellow/20 rounded-full blur-2xl'
-                  animate={{
-                    scale: [1, 1.3, 1],
-                    opacity: [0.3, 0.7, 0.3],
-                  }}
-                  transition={{
-                    duration: 4,
-                    repeat: Infinity,
-                    ease: 'easeInOut',
-                  }}
-                />
               </motion.div>
             </AnimatedSection>
           </div>
