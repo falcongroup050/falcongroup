@@ -11,7 +11,7 @@ export const fadeInDown = {
 }
 
 export const fadeInLeft = {
-  initial: { opacity: 0, x: -60 },
+  initial: { opacity: 0, x: window.innerWidth < 768 ? -20 : -60 },
   animate: { opacity: 1, x: 0 },
   transition: { duration: 0.6, ease: "easeOut" }
 }
