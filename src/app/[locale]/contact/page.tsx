@@ -28,7 +28,17 @@ import {
   staggerContainer,
 } from '@/lib/motion'
 import { AnimatePresence, motion } from 'framer-motion'
-import { CheckCircle2, Clock, Mail, MapPin, Phone, Send } from 'lucide-react'
+import {
+  CheckCircle2,
+  Clock,
+  Mail,
+  MapPin,
+  Phone,
+  Send,
+  Upload,
+  FileText,
+  X,
+} from 'lucide-react'
 import Link from 'next/link'
 import { useTranslations } from 'next-intl'
 import type React from 'react'
@@ -91,23 +101,35 @@ const contactInfoVariants = {
   },
 }
 
-const mapPulseAnimation = {
-  animate: {
-    scale: [1, 1.1, 1],
-    opacity: [0.7, 1, 0.7],
-  },
-  transition: {
-    duration: 2,
-    repeat: Number.POSITIVE_INFINITY,
-    ease: 'easeInOut',
-  },
-}
-
 export default function ContactPage() {
   const t = useTranslations('')
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitted, setSubmitted] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [selectedService, setSelectedService] = useState<string>('')
+  const [uploadedFiles, setUploadedFiles] = useState<File[]>([])
+
+  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files || [])
+    const pdfFiles = files.filter((file) => file.type === 'application/pdf')
+
+    if (pdfFiles.length !== files.length) {
+      setError('Please upload only PDF files.')
+      return
+    }
+
+    if (pdfFiles.length + uploadedFiles.length > 3) {
+      setError('Maximum 3 PDF files allowed.')
+      return
+    }
+
+    setUploadedFiles((prev) => [...prev, ...pdfFiles])
+    setError(null)
+  }
+
+  const removeFile = (index: number) => {
+    setUploadedFiles((prev) => prev.filter((_, i) => i !== index))
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -124,13 +146,14 @@ export default function ContactPage() {
       message: formData.get('message') as string,
     }
 
+    uploadedFiles.forEach((file, index) => {
+      formData.append(`pdf-${index}`, file)
+    })
+
     try {
       const response = await fetch('/api/contact', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
+        body: formData,
       })
 
       if (!response.ok) {
@@ -138,6 +161,8 @@ export default function ContactPage() {
       }
 
       setSubmitted(true)
+      setUploadedFiles([])
+      setSelectedService('')
     } catch (err) {
       setError('Failed to send message. Please try again.')
       console.error('Form submission error:', err)
@@ -207,6 +232,7 @@ export default function ContactPage() {
             duration: 10,
             repeat: Number.POSITIVE_INFINITY,
             ease: 'easeInOut',
+            delay: 0.5,
           }}
         />
 
@@ -234,7 +260,6 @@ export default function ContactPage() {
             <info.icon className={`h-6 w-6 ${info.color}`} />
           </motion.div>
         ))}
-
         <div className='container relative z-10'>
           <motion.div
             className='max-w-3xl mx-auto text-center space-y-6'
@@ -451,7 +476,11 @@ export default function ContactPage() {
                             <Label htmlFor='service'>
                               {t('contact.form.service')}
                             </Label>
-                            <Select name='service'>
+                            <Select
+                              name='service'
+                              onValueChange={setSelectedService}
+                              value={selectedService}
+                            >
                               <SelectTrigger className='transition-all duration-300 focus:ring-2 focus:ring-naples-yellow/50'>
                                 <SelectValue placeholder='Select a service' />
                               </SelectTrigger>
@@ -468,10 +497,94 @@ export default function ContactPage() {
                                 <SelectItem value='transportation'>
                                   Transportation
                                 </SelectItem>
+                                <SelectItem value='hiring'>Hiring</SelectItem>
                                 <SelectItem value='other'>Other</SelectItem>
                               </SelectContent>
                             </Select>
                           </motion.div>
+
+                          <AnimatePresence>
+                            {selectedService === 'hiring' && (
+                              <div className='space-y-4'>
+                                <motion.div
+                                  className='space-y-2'
+                                  variants={formFieldVariants}
+                                >
+                                  <Label htmlFor='resume'>
+                                    Upload Resume/CV (PDF only, max 3 files)
+                                  </Label>
+                                  <div className='relative'>
+                                    <Input
+                                      id='resume'
+                                      type='file'
+                                      accept='.pdf'
+                                      multiple
+                                      onChange={handleFileUpload}
+                                      className='hidden'
+                                    />
+                                    <Label
+                                      htmlFor='resume'
+                                      className='flex items-center justify-center w-full h-32 border-2 border-dashed border-muted-foreground/25 rounded-lg cursor-pointer hover:border-naples-yellow/50 transition-colors duration-300 bg-muted/10 hover:bg-muted/20'
+                                    >
+                                      <div className='text-center'>
+                                        <Upload className='h-8 w-8 mx-auto mb-2 text-muted-foreground' />
+                                        <p className='text-sm text-muted-foreground'>
+                                          Click to upload PDF files
+                                        </p>
+                                        <p className='text-xs text-muted-foreground mt-1'>
+                                          Maximum 3 files, PDF format only
+                                        </p>
+                                      </div>
+                                    </Label>
+                                  </div>
+                                </motion.div>
+
+                                {uploadedFiles.length > 0 && (
+                                  <motion.div
+                                    initial={{ opacity: 0, y: 10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    className='space-y-2'
+                                  >
+                                    <Label>Uploaded Files:</Label>
+                                    <div className='space-y-2'>
+                                      {uploadedFiles.map((file, index) => (
+                                        <motion.div
+                                          key={index}
+                                          initial={{ opacity: 0, x: -10 }}
+                                          animate={{ opacity: 1, x: 0 }}
+                                          className='flex items-center justify-between p-3 bg-muted/20 rounded-lg border'
+                                        >
+                                          <div className='flex items-center space-x-2'>
+                                            <FileText className='h-4 w-4 text-red-500' />
+                                            <span className='text-sm font-medium'>
+                                              {file.name}
+                                            </span>
+                                            <span className='text-xs text-muted-foreground'>
+                                              (
+                                              {(
+                                                file.size /
+                                                1024 /
+                                                1024
+                                              ).toFixed(2)}{' '}
+                                              MB)
+                                            </span>
+                                          </div>
+                                          <button
+                                            aria-label='Remove file'
+                                            type='button'
+                                            onClick={() => removeFile(index)}
+                                            className='p-1 hover:bg-red-100 rounded-full transition-colors duration-200'
+                                          >
+                                            <X className='h-4 w-4 text-red-500' />
+                                          </button>
+                                        </motion.div>
+                                      ))}
+                                    </div>
+                                  </motion.div>
+                                )}
+                              </div>
+                            )}
+                          </AnimatePresence>
 
                           <motion.div
                             className='space-y-2'
